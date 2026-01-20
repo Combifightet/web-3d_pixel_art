@@ -1,0 +1,165 @@
+[gd_scene load_steps=14 format=3 uid="uid://i5dfbmxig84p"]
+
+[ext_resource type="ArrayMesh" uid="uid://c3p3fs085u21j" path="res://assets/mesh/test_objects/ico_sphere.obj" id="1_ywgp6"]
+[ext_resource type="ArrayMesh" uid="uid://cvttifcegavrt" path="res://assets/mesh/test_objects/stone.obj" id="2_0vfqx"]
+[ext_resource type="ArrayMesh" uid="uid://bi3mxpe806u1m" path="res://assets/mesh/test_objects/test_cube.obj" id="3_wbbl4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ea1x0"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.45490196, 0.64705884, 0.34117648, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_s45dl"]
+material = SubResource("StandardMaterial3D_ea1x0")
+size = Vector2(32, 32)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e08lw"]
+albedo_color = Color(0.44313726, 0.7529412, 0.8352941, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e3xe6"]
+albedo_color = Color(0.6, 0.5568628, 0.5176471, 1)
+
+[sub_resource type="Animation" id="Animation_ea1x0"]
+resource_name = "test_cube"
+length = 4.0000033
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TestCube:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(1, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, -6.284, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 4.0000005)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Icosphere:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, -6.284, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 4.0000005)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Icosphere:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3, 0),
+"points": PackedFloat32Array(0.5, -0.8, 0, 0.8, 0, 1.5, -0.8, 0, 0.8, 0, 0.5, -0.8, 0, 0.8, 0, 1.5, -0.8, 0, 0.8, 0),
+"times": PackedFloat32Array(-1.0000001, 1.0000001, 3.0000002, 5.0000005)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../WorldEnvironment/OmniLight3D:position:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(5, -0.3, 0, 0.3, 0, -1, -0.3, 0, 0.3, 0, 5, -0.3, 0, 0.3, 0, -1, -0.3, 0, 0.3, 0),
+"times": PackedFloat32Array(-0.7, 1.3, 3.3, 5.2999997)
+}
+
+[sub_resource type="Animation" id="Animation_e08lw"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icosphere:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.5012525, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e3xe6"]
+_data = {
+&"RESET": SubResource("Animation_e08lw"),
+&"test_cube": SubResource("Animation_ea1x0")
+}
+
+[sub_resource type="Environment" id="Environment_ea1x0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcbma"]
+albedo_color = Color(0.9607843, 0.48235294, 0.29803923, 1)
+emission_enabled = true
+emission = Color(0.9607843, 0.48235294, 0.29803923, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_ea1x0"]
+material = SubResource("StandardMaterial3D_mcbma")
+radius = 0.25
+height = 0.5
+radial_segments = 16
+rings = 7
+
+[node name="GameWorld" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.70710677, -0.35355338, 0.6123724, 0, 0.8660254, 0.5, -0.70710677, -0.35355338, 0.6123724, 12, 10, 12)
+projection = 1
+fov = 25.0
+size = 6.667
+far = 110.0
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.4234619, 0.094177246, 0.27954102)
+mesh = SubResource("QuadMesh_s45dl")
+skeleton = NodePath("../..")
+
+[node name="Icosphere" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.06948775, 0, -0.9975828, 0, 1, 0, 0.9975828, 0, 0.06948775, 3, 1, -3)
+mesh = ExtResource("1_ywgp6")
+skeleton = NodePath("../TestCube")
+surface_material_override/0 = SubResource("StandardMaterial3D_e08lw")
+
+[node name="Stone" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
+mesh = ExtResource("2_0vfqx")
+skeleton = NodePath("../TestCube")
+surface_material_override/0 = SubResource("StandardMaterial3D_e3xe6")
+
+[node name="TestCube" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 2)
+mesh = ExtResource("3_wbbl4")
+skeleton = NodePath("../Ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_e3xe6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Level"]
+libraries = {
+&"": SubResource("AnimationLibrary_e3xe6")
+}
+autoplay = "test_cube"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ea1x0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.8660254, 0.38302222, 0.32139382, 0, -0.64278764, 0.76604444, 0.5, -0.66341394, -0.5566704, 0, 10, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 3.0516677)
+light_color = Color(0.9607843, 0.48235294, 0.29803923, 1)
+light_energy = 0.505
+shadow_enabled = true
+shadow_bias = 0.01
+shadow_opacity = 0.5
+omni_range = 2.841
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/OmniLight3D"]
+mesh = SubResource("SphereMesh_ea1x0")
